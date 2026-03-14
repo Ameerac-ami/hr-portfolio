@@ -1,0 +1,212 @@
+@import "tailwindcss";
+
+@theme {
+    --font-sans:
+        "Inter", var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+    --font-display:
+        "Outfit", var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+
+    /* True Dark Palette */
+    --color-primary: #ffffff;
+    --color-primary-dark: #f4f4f5;
+    --color-secondary: #71717a;
+    --color-accent: #10b981; /* High Contrast Emerald */
+
+    --color-bg-deep: #000000;
+    --color-card-dark: rgba(24, 24, 27, 0.4);
+    --color-border-dark: rgba(39, 39, 42, 0.6);
+
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+}
+
+:root {
+    --background: #000000; /* Pure Black */
+    --foreground: #ffffff;
+    --card: rgba(9, 9, 11, 0.8);
+    --border: rgba(39, 39, 42, 0.8);
+}
+
+.dark {
+    --background: #000000;
+    --foreground: #ffffff;
+    --card: rgba(9, 9, 11, 0.8);
+    --border: rgba(39, 39, 42, 0.8);
+}
+
+@layer base {
+    * {
+        border-color: var(--border);
+    }
+
+    html {
+        /* Removed scroll-behavior: smooth to prevent conflict with JS scrollIntoView */
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background-color: var(--background);
+        color: var(--foreground);
+        @apply transition-colors duration-300;
+        font-feature-settings:
+            "rlig" 1,
+            "calt" 1;
+        caret-color: #10b981; /* Emerald Caret */
+    }
+}
+
+@layer utilities {
+    .glass {
+        backdrop-filter: blur(16px);
+        background-color: #09090b99;
+        border: 1px solid #27272a66;
+        box-shadow: 0 4px 30px #00000080;
+    }
+
+    .glass-dark {
+        backdrop-filter: blur(20px);
+        background-color: #000000cc;
+        border: 1px solid #ffffff08;
+    }
+
+    .text-gradient {
+        @apply bg-clip-text text-transparent bg-gradient-to-br from-white via-neutral-200 to-neutral-500;
+    }
+
+    .bg-mesh {
+        background:
+            radial-gradient(
+                circle at 50% 0%,
+                rgba(52, 211, 153, 0.08) 0%,
+                transparent 50%
+            ),
+            radial-gradient(
+                circle at 100% 0%,
+                rgba(52, 211, 153, 0.05) 0%,
+                transparent 40%
+            ),
+            radial-gradient(
+                circle at 100% 100%,
+                rgba(52, 211, 153, 0.08) 0%,
+                transparent 50%
+            ),
+            radial-gradient(
+                circle at 0% 100%,
+                rgba(52, 211, 153, 0.05) 0%,
+                transparent 40%
+            );
+        background-size: 200% 200%;
+        animation: mesh-move 20s ease-in-out infinite alternate;
+    }
+}
+
+@keyframes mesh-move {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    100% {
+        background-position: 100% 100%;
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slide-up {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-20px) rotate(5deg);
+    }
+
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+}
+
+@keyframes drift {
+    from {
+        transform: translateX(-5%) translateY(-5%);
+    }
+
+    to {
+        transform: translateX(5%) translateY(5%);
+    }
+}
+
+.animate-fade-in {
+    animation: fade-in 0.8s ease-out forwards;
+}
+
+.animate-slide-up {
+    animation: slide-up 0.8s ease-out forwards;
+}
+
+.animate-float {
+    animation: float 10s ease-in-out infinite;
+}
+
+.animate-drift {
+    animation: drift 20s ease-in-out infinite alternate;
+}
+
+/* Scroll Reveal Classes */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+    transition:
+        opacity 0.8s cubic-bezier(0.2, 0, 0.2, 1),
+        transform 0.8s cubic-bezier(0.2, 0, 0.2, 1);
+    will-change: opacity, transform;
+}
+
+.reveal.revealed {
+    opacity: 1 !important;
+    transform: translateY(0) scale(1) !important;
+}
+
+.parallax-orb {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(140px);
+    z-index: -1;
+    opacity: 0.25;
+    will-change: transform;
+    transition: transform 0.4s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.parallax-box {
+    position: absolute;
+    pointer-events: none;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(2px);
+    z-index: -1;
+    border-radius: 24px;
+    will-change: transform;
+    transition: transform 0.6s cubic-bezier(0.2, 0, 0.2, 1);
+}
